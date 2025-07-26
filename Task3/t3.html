@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Interactive Web Project</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <h1><strong>🌐 Interactive Web Project</strong></h1>
+    <p><strong>Responsive design, interactive quiz, and API integration</strong></p>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#quiz"><strong>🎯 Quiz</strong></a></li>
+      <li><a href="#api"><strong>💡 API Joke</strong></a></li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    <!-- Section 1: Responsive Quiz -->
+    <section id="quiz">
+      <h2><strong>🎯 Interactive Quiz</strong></h2>
+      <div class="quiz-container">
+        <div class="quiz-question">
+          <h3><strong>1. What does CSS stand for?</strong></h3>
+          <label><input type="radio" name="q1" value="a"> Creative Style Sheets</label>
+          <label><input type="radio" name="q1" value="b"> Cascading Style Sheets</label>
+          <label><input type="radio" name="q1" value="c"> Computer Style System</label>
+        </div>
+
+        <div class="quiz-question">
+          <h3><strong>2. Which tag is used to link a JavaScript file?</strong></h3>
+          <label><input type="radio" name="q2" value="a">&lt;js&gt;</label>
+          <label><input type="radio" name="q2" value="b">&lt;link&gt;</label>
+          <label><input type="radio" name="q2" value="c">&lt;script&gt;</label>
+        </div>
+
+        <div class="quiz-question">
+          <h3><strong>3. Which property is used for responsive layouts?</strong></h3>
+          <label><input type="radio" name="q3" value="a"> position</label>
+          <label><input type="radio" name="q3" value="b"> display</label>
+          <label><input type="radio" name="q3" value="c"> flex</label>
+        </div>
+
+        <button class="btn" onclick="submitQuiz()">Submit Quiz</button>
+      </div>
+    </section>
+
+    <!-- Result Popup Modal -->
+    <div class="modal" id="resultModal">
+      <div class="modal-content">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <h2><strong>🎉 Quiz Result</strong></h2>
+        <p id="quizResultText"></p>
+      </div>
+    </div>
+
+    <!-- Section 2: API Fetch -->
+    <section id="api">
+      <h2><strong>💡 Fetch Programming Joke</strong></h2>
+      <p><strong>Click the button to get a programming joke from an external API.</strong></p>
+      <button class="btn" onclick="fetchJoke()">Get Joke</button>
+      <div id="jokeDisplay" class="api-output"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p><strong>&copy; 2025 Web Project | Built with ❤️ using HTML, CSS & JS</strong></p>
+  </footer>
+
+  <script>
+    // Quiz Submission
+    function submitQuiz() {
+      const correctAnswers = { q1: 'b', q2: 'c', q3: 'c' };
+      let score = 0;
+      const total = Object.keys(correctAnswers).length;
+
+      for (let q in correctAnswers) {
+        const selected = document.querySelector(`input[name="${q}"]:checked`);
+        if (selected && selected.value === correctAnswers[q]) {
+          score++;
+        }
+      }
+
+      document.getElementById("quizResultText").innerText = `You got ${score} out of ${total} correct.`;
+      document.getElementById("resultModal").style.display = "flex";
+    }
+
+    // Close Popup
+    function closePopup() {
+      document.getElementById("resultModal").style.display = "none";
+    }
+
+    // Fetch Joke
+    function fetchJoke() {
+      const output = document.getElementById("jokeDisplay");
+      output.textContent = 'Loading...';
+
+      fetch('https://v2.jokeapi.dev/joke/Programming?type=single')
+        .then(res => res.json())
+        .then(data => {
+          output.textContent = data.joke || 'No joke found!';
+        })
+        .catch(() => {
+          output.textContent = 'Error fetching joke.';
+        });
+    }
+  </script>
+</body>
+</html>
