@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Modern Web Project</title>
+  <style>
+    #home {
+  background: linear-gradient(135deg, #0077b6, #00b4d8);
+  color: white;
+}
+
+#portfolio {
+  background-color: #e3f2fd;
+  color: #0d47a1;
+}
+
+#todo {
+  background-color: #fff3e0;
+  color: #ef6c00;
+}
+
+#products {
+  background-color: #f1f8e9;
+  color: #33691e;
+}
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f8f9fa;
+      color: #333;
+    }
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 1rem;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+      padding-left: 0;
+    }
+    nav a {
+      color: rgb(255, 255, 255);
+      text-decoration: none;
+    }
+    .hero {
+      padding: 2rem;
+      text-align: center;
+      background: blue;
+      color: white;
+    }
+    footer {
+      text-align: center;
+      background: #333;
+      color: white;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+
+    section {
+      display: none;
+      padding: 2rem;
+    }
+    .active {
+      display: block;
+    }
+
+    /* To-Do Section */
+    .todo-container { max-width: 500px; margin: auto; padding: 1rem; }
+    input, button { padding: 0.5rem; width: 100%; margin-top: 0.5rem; }
+    ul { padding: 0; list-style: none; }
+    li { background: #e2e2e2; padding: 0.5rem; margin-top: 0.5rem; }
+
+    /* Product Section */
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; padding: 1rem; }
+    .product-card { border: 1px solid #ccc; padding: 1rem; background: #fff; text-align: center; border-radius: 8px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+    .product-card a { text-decoration: none; color: #007bff; font-weight: bold; }
+    .product-card a:hover { text-decoration: underline; }
+    .product-card img {
+      max-width: 100%;
+      height: 150px;
+      object-fit: contain;
+      margin-bottom: 0.5rem;
+    }
+
+    .submit-btn {
+      margin-top: 1rem;
+      padding: 0.6rem 1rem;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .submit-btn:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <h1>🌐 Modern Web Project</h1>
+      <ul>
+        <li><a href="#" onclick="showPage('home')">Home</a></li>
+        <li><a href="#" onclick="showPage('portfolio')">Portfolio</a></li>
+        <li><a href="#" onclick="showPage('todo')">To-Do App</a></li>
+        <li><a href="#" onclick="showPage('products')">Products</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Pages -->
+  <main>
+    <section id="home" class="active hero">
+      <h2>👋 Welcome!</h2>
+      <p>This is a multi-page modern web project using HTML, CSS, and JavaScript.</p>
+    </section>
+
+    <section id="portfolio">
+      <h2>About Me</h2>
+      <p>This is a portfolio page describing skills and projects.</p>
+      <h3>Projects</h3>
+      <ul>
+        <li>To-Do App</li>
+        <li>Product Listing Page</li>
+      </ul>
+    </section>
+
+    <section id="todo" class="todo-container">
+      <h2>To-Do List</h2>
+      <input type="text" id="task" placeholder="Add a task" />
+      <button onclick="addTask()">Add Task</button>
+      <ul id="task-list"></ul>
+    </section>
+
+    <section id="products">
+      <h2>Product Listing</h2>
+      <select id="sort" onchange="sortProducts()">
+        <option value="default">Sort by</option>
+        <option value="price">Price</option>
+        <option value="rating">Rating</option>
+      </select>
+      <div class="product-grid" id="product-list"></div>
+      <button class="submit-btn" onclick="submitProducts()">Submit</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Modern Web Project | Built with ❤️</p>
+  </footer>
+
+  <script>
+    // Navigation
+    function showPage(pageId) {
+      document.querySelectorAll("main section").forEach(sec => sec.classList.remove("active"));
+      document.getElementById(pageId).classList.add("active");
+    }
+
+    // To-Do App
+    const taskList = document.getElementById('task-list');
+    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+    function renderTasks() {
+      taskList.innerHTML = '';
+      tasks.forEach((task, index) => {
+        taskList.innerHTML += `<li>${task} <button onclick="removeTask(${index})">X</button></li>`;
+      });
+    }
+
+    function addTask() {
+      const task = document.getElementById('task').value;
+      if (task) {
+        tasks.push(task);
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        document.getElementById('task').value = '';
+        renderTasks();
+      }
+    }
+
+    function removeTask(index) {
+      tasks.splice(index, 1);
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+      renderTasks();
+    }
+
+    renderTasks();
+
+    // Product Listing
+    const products = [
+      { name: "Smartphones", price: 15000, rating: 4.5, link: "https://example.com/smartphone", img: "https://cdn.mos.cms.futurecdn.net/M4nigVN3vvA5EEnNX9atxY-1200-80.jpg" },
+      { name: "Laptops", price: 55000, rating: 4.8, link: "https://example.com/laptop", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm0m6uW1PgQ2CXLGVmk7chHb5q-hwfOxxOsw&s" },
+      { name: "Earbuds", price: 2500, rating: 4.2, link: "https://example.com/earbuds", img: "https://vader-prod.s3.amazonaws.com/1715184704-1714594344-soundcore-sport-x20-wireless-earbuds-002-6632a208b67a0.jpg" },
+      { name: "Tablets", price: 22000, rating: 4.3, link: "https://example.com/tablet", img: "https://cdn.thewirecutter.com/wp-content/media/2024/12/androidtablets-2048px-00077-2x1-1.jpg?width=2048&quality=75&crop=2:1&auto=webp" },
+      { name: "smartwatches", price: 5000, rating: 4.6, link: "https://example.com/smartwatch", img: "https://engineeringproductdesign.com/wp-content/uploads/apple_watches_microphone.png" },
+    ];
+
+    function renderProducts(items) {
+      const list = document.getElementById('product-list');
+      list.innerHTML = '';
+      items.forEach(p => {
+        list.innerHTML += `
+          <div class="product-card">
+            <img src="${p.img}" alt="${p.name}" />
+            <a href="${p.link}" target="_blank">${p.name}</a>
+            <p>₹${p.price}</p>
+            <p>Rating: ${p.rating}</p>
+          </div>`;
+      });
+    }
+
+    function sortProducts() {
+      const type = document.getElementById('sort').value;
+      let sorted = [...products];
+      if (type === 'price') sorted.sort((a, b) => a.price - b.price);
+      else if (type === 'rating') sorted.sort((a, b) => b.rating - a.rating);
+      renderProducts(sorted);
+    }
+
+    function submitProducts() {
+      alert("Thanks for checking out our products!");
+    }
+
+    renderProducts(products);
+  </script>
+
+</body>
+</html>
