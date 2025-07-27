@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Capstone E-Commerce Site</title>
+  <style>
+    :root {
+      --primary: #6c63ff;
+      --dark: #333;
+      --light: #f4f4f4;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--light);
+    }
+
+    header {
+      background: var(--dark);
+      color: #fff;
+      padding: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 3rem 1rem;
+      background: var(--primary);
+      color: white;
+    }
+
+    .products {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .product-card {
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .product-card:hover {
+      transform: scale(1.03);
+    }
+
+    .product-card img {
+      width: 100%;
+      max-height: 160px;
+      object-fit: contain;
+    }
+
+    .contact {
+      padding: 3rem 1rem;
+      background: #fff;
+    }
+
+    .contact-card {
+      max-width: 500px;
+      margin: auto;
+      background: var(--light);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .contact-card h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    textarea {
+      resize: vertical;
+      height: 100px;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      background: var(--primary);
+      color: white;
+      padding: 0.75rem;
+      border: none;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+      background: #574b90;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: var(--dark);
+      color: white;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 600px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <h1>MyShop</h1>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="home" class="hero">
+    <h2>🌐 Welcome to MyShop</h2>
+    <p>Your one-stop solution for mobiles, laptops & more!</p>
+  </section>
+
+  <section id="products" class="products">
+    <h2>Our Products</h2>
+    <div id="product-list" class="product-grid"></div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="contact-card">
+      <h2>Contact Us</h2>
+      <form id="contact-form">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" placeholder="Your Name" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" placeholder="Your Email" required />
+        </div>
+        <div class="form-group">
+          <label for="message">Message:</label>
+          <textarea id="message" placeholder="Your Message" required></textarea>
+        </div>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 MyShop. Built with ❤️</p>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const products = [
+        { name: "iPhone 14 Pro", price: "₹80000", rating: 4.8, image: "https://www.dateks.lv/images/pic/1200/1200/204/1823.jpg" },
+        { name: "Samsung Galaxy S23", price: "₹75000", rating: 4.7, image: "https://rukminim2.flixcart.com/image/704/844/xif0q/mobile/t/0/g/-original-imah4zp7fvqp8wev.jpeg?q=90&crop=false" },
+        { name: "MacBook Air M2", price: "₹10000", rating: 4.9, image: "https://www.apple.com/newsroom/images/product/mac/standard/Apple-WWDC22-MacBook-Air-hero-220606_big.jpg.large.jpg" },
+        { name: "Dell XPS 13", price: "₹55000", rating: 4.6, image: "data:image/jpeg;base64,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" },
+        { name: "AirPods Pro", price: "₹12000", rating: 4.5, image: "https://www.apple.com/newsroom/images/product/airpods/standard/Apple_AirPods-Pro_New-Design-Case-And-AirPods-Pro_102819_big.jpg.large.jpg" },
+        { name: "Boat Airdopes 441", price: "₹14000", rating: 4.2, image: "https://www.boat-lifestyle.com/cdn/shop/products/65d6142c-6a8d-44fa-ac59-e0b0b9e97b8b.png?v=1625046016" }
+      ];
+
+      const productList = document.getElementById("product-list");
+      products.forEach(p => {
+        const card = document.createElement("div");
+        card.className = "product-card";
+        card.innerHTML = `
+          <img src="${p.image}" alt="${p.name}" />
+          <h3>${p.name}</h3>
+          <p>Price: ${p.price}</p>
+          <p>Rating: ${p.rating} ⭐</p>
+        `;
+        productList.appendChild(card);
+      });
+
+      document.getElementById("contact-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        alert("📨 Thanks for contacting us! We'll get back to you soon.");
+        e.target.reset();
+      });
+    });
+  </script>
+</body>
+</html>
